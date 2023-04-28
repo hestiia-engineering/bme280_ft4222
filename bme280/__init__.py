@@ -32,8 +32,9 @@ __version__ = "0.2.4"
 import datetime
 import time
 import uuid
+import ft4222
 
-from bme280.reader import reader
+from bme280.reader_ft4222 import reader_ft4222
 import bme280.const as oversampling
 import pytz
 
@@ -147,7 +148,7 @@ def load_calibration_params(bus, address=DEFAULT_PORT):
     formula to perform temperature readout in degC, humidity in % and pressure
     in hPA.
     """
-    read = reader(bus, address)
+    read = reader_ft4222(bus, address)
     compensation_params = params()
 
     # Temperature trimming params
@@ -211,11 +212,11 @@ def sample(bus, address=DEFAULT_PORT, compensation_params=None, sampling=oversam
     h_oversampling = sampling or oversampling.x1
     p_oversampling = sampling or oversampling.x1
 
-    bus.write_byte_data(address, 0xF2, h_oversampling)  # ctrl_hum
-    bus.write_byte_data(address, 0xF4, t_oversampling << 5 | p_oversampling << 2 | mode)  # ctrl
+    bus.i2c_write(address, [0xF2, h_oversampling])  # ctrl_hum
+    bus.i2c_write(address, [0xF4, t_oversampling << 5 | p_oversampling << 2 | mode])  # ctrl
     delay = __calc_delay(t_oversampling, h_oversampling, p_oversampling)
     time.sleep(delay)
 
-    block = bus.read_i2c_block_data(address, 0xF7, 8)
+    block = bus.i2c_read(address, [0xF7], bytearray(8), ft4222.I2CMaster.Flag.START_AND_STOP)
     raw_data = uncompensated_readings(block)
     return compensated_readings(raw_data, compensation_params)
