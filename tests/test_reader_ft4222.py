@@ -3,7 +3,7 @@
 # See LICENSE.rst for details.
 
 from unittest.mock import Mock, MagicMock, ANY
-from bme280.reader_ft4222 import reader_ft4222
+from bme280_ft4222.reader_ft4222 import reader_ft4222
 import ft4222
 
 def i2c_read_side_effect(byte_array):

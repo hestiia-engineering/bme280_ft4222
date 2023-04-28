@@ -34,8 +34,8 @@ import time
 import uuid
 import ft4222
 
-from bme280.reader_ft4222 import reader_ft4222
-import bme280.const as oversampling
+from bme280_ft4222.reader_ft4222 import reader_ft4222
+import bme280_ft4222.const as oversampling
 import pytz
 
 # Oversampling modes

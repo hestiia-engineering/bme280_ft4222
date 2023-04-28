@@ -2,8 +2,8 @@
 # Copyright (c) 2018-2021 Richard Hull
 # See LICENSE.rst for details.
 
-import bme280.const as c
-from bme280.const import ConstError
+import bme280_ft4222.const as c
+from bme280_ft4222.const import ConstError
 import pytest
 
 c.const1 = "goodbye"
