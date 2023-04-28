@@ -11,7 +11,7 @@ README = open(os.path.join(here, 'README.rst')).read()
 
 
 def _read_version():
-    with open(os.path.join(here, 'bme280', '__init__.py')) as code:
+    with open(os.path.join(here, 'bme280_ft4222', '__init__.py')) as code:
         contents = code.read()
     match = re.search(r'__version__\s*=\s*["\'](.*?)["\']', contents)
     return match.group(1)
@@ -27,18 +27,17 @@ test_deps = [
 version = _read_version()
 
 setup(
-    name="RPi.bme280",
+    name="bme280_ft4222",
     version=version,
-    author="Richard Hull",
-    author_email="richard.hull@destructuring-bind.org",
-    description="A library to drive a Bosch BME280 temperature, humidity, pressure sensor over I2C",
+    author="Richard Hull and Antoine Sachet",
+    author_email="antoine.sachet@hestiia.com",
+    description="A library to drive a Bosch BME280 temperature, humidity, pressure sensor over I2C over USB via a FT4222",
     long_description=README,
     license="MIT",
     keywords=["raspberry pi", "orange pi", "banana pi", "rpi", "bosch", "BME280", "i2c", "temperature", "humidity", "pressure"],
-    url="https://github.com/rm-hull/bme280",
-    download_url="https://github.com/rm-hull/bme280/tarball/" + version,
-    packages=['bme280'],
-    install_requires=["pytz", "smbus2"],
+    url="https://github.com/hestiia-engineering/bme280_ft4222",
+    packages=['bme280_ft4222'],
+    install_requires=["pytz", "ft4222"],
     setup_requires=pytest_runner,
     tests_require=test_deps,
     python_requires=">=3.6, <4",
@@ -54,16 +53,15 @@ setup(
     },
     classifiers=[
         "License :: OSI Approved :: MIT License",
-        "Development Status :: 5 - Production/Stable",
-        "Intended Audience :: Education",
+        "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
-        "Topic :: Education",
         "Topic :: System :: Hardware",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10"
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11"
     ]
 )

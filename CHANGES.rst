@@ -1,43 +1,7 @@
-BME280 ChangeLog
+BME280_ft4222 ChangeLog
 ================
 
-0.2.4
------
-* [Bug fix] compensated_readings: make 'timestamp' tz-aware.
+0.0.2.4
+-------
 
-0.2.3
------
-* [Bug fix] Format compensated reading timestamp to always include the milliseconds
-
-0.2.2
------
-* [Bug fix] Correct H5 compensation param ... again
-
-0.2.1
------
-* Memoized ``load_calibration_params(...)`` if not supplied to ``sample(...)`` method.
-
-0.2.0
------
-* Add regression tests
-* Support multiple devices (fixes issue #7)
-
-0.1.3
------
-* [Bug fix] Correct H5 compensation param
-* Add uncompensated_readings ``__repr__``
-
-
-0.1.2
------
-* Use unicode degree symbol (°C) in ``__repr__`` & docstrings
-
-0.1.1
------
-* Port argument is optional, defaults to 0x76
-* Compensated readings now contains a UUID
-* Inclusion of changelog
-
-0.1.0
------
-* Initial version
+* Adapted the code of BM280 (v0.2.4) to work with an I2C bus generated with ft4222.open_i2c
