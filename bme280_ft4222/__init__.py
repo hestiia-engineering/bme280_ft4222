@@ -45,7 +45,8 @@ oversampling.x4 = 3
 oversampling.x8 = 4
 oversampling.x16 = 5
 
-DEFAULT_PORT = 0x76
+DEFAULT_PORT = 0x77
+# Can also be 0x76
 
 
 class uncompensated_readings(object):
@@ -212,11 +213,12 @@ def sample(bus, address=DEFAULT_PORT, compensation_params=None, sampling=oversam
     h_oversampling = sampling or oversampling.x1
     p_oversampling = sampling or oversampling.x1
 
-    bus.i2c_write(address, [0xF2, h_oversampling])  # ctrl_hum
-    bus.i2c_write(address, [0xF4, t_oversampling << 5 | p_oversampling << 2 | mode])  # ctrl
+    bus.i2cMaster_Write(address, bytearray([0xF2, h_oversampling]))  # ctrl_hum
+    bus.i2cMaster_Write(address, bytearray([0xF4, t_oversampling << 5 | p_oversampling << 2 | mode]))  # ctrl
     delay = __calc_delay(t_oversampling, h_oversampling, p_oversampling)
     time.sleep(delay)
 
-    block = bus.i2c_read(address, [0xF7], bytearray(8), ft4222.I2CMaster.Flag.START_AND_STOP)
+    reader = reader_ft4222(bus, address)
+    block = reader.read_register(0xF7, 8)
     raw_data = uncompensated_readings(block)
     return compensated_readings(raw_data, compensation_params)
